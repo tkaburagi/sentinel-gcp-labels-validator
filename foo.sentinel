@@ -1,0 +1,17 @@
+import "tfplan"
+
+mandatory_labels = [
+  "ttl", 
+  "owner",
+  "env",
+]
+
+main = rule {
+    all tfplan.resources.google_compute_instance as _, instances {
+      all instances as _, r {
+            all mandatory_labels as t {
+                r.applied.labels contains t
+            }
+        }
+    }
+}
